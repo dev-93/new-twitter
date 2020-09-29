@@ -33,7 +33,7 @@ const Auth = () => {
             }
             console.log(data);
         } catch (error) {
-            setError(error, error.message);
+            setError(error.message);
         }
     };
 
