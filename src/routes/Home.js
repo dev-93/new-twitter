@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "fbase";
 
-const Home = () => {
+const Home = ({ userObj }) => {
     const [text, setText] = useState("");
     const [data, setData] = useState([]);
     const getData = async () => {
@@ -23,9 +23,8 @@ const Home = () => {
         e.preventDefault();
         await dbService.collection("information").add({
             text,
-            age: 28,
-            name: "taenam",
             createDate: new Date().toLocaleString(),
+            creatorId: userObj.uid,
         });
         setText("");
     };
