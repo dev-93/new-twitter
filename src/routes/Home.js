@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "fbase";
+import TextList from "components/TextList";
 
 const Home = ({ userObj }) => {
     const [text, setText] = useState("");
@@ -45,7 +46,7 @@ const Home = ({ userObj }) => {
             </form>
             <div>
                 {data.map((list) => (
-                    <div key={list.id}>{list.text}</div>
+                    <TextList key={list.id} listObj={list} />
                 ))}
             </div>
         </>
