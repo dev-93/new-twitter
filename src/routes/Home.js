@@ -46,7 +46,11 @@ const Home = ({ userObj }) => {
             </form>
             <div>
                 {data.map((list) => (
-                    <TextList key={list.id} listObj={list} />
+                    <TextList
+                        key={list.id}
+                        listObj={list}
+                        isOwner={list.creatorId === userObj.uid}
+                    />
                 ))}
             </div>
         </>
