@@ -37,7 +37,7 @@ const TextList = ({ listObj, isOwner }) => {
                             onChange={onChange}
                             value={newText}
                         />
-                        <input type="submit" value="Update text" />
+                        <input type="submit" value="수정하기" />
                     </form>
                     <button onClick={onToggle}>cancel</button>
                 </>
