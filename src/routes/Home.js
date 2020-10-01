@@ -4,24 +4,20 @@ import { dbService } from "fbase";
 const Home = ({ userObj }) => {
     const [text, setText] = useState("");
     const [data, setData] = useState([]);
-    const getData = async () => {
-        const dbData = await dbService.collection("information").get();
-        dbData.forEach((document) => {
-            const dataObj = {
-                ...document.data(),
-                id: document.id,
-            };
-            setData((prev) => [dataObj, ...prev]);
-        });
-    };
 
     useEffect(() => {
-        getData();
+        dbService.collection("new-twitter").onSnapshot((snapshot) => {
+            const newArray = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setData(newArray);
+        });
     }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await dbService.collection("information").add({
+        await dbService.collection("new-twitter").add({
             text,
             createDate: new Date().toLocaleString(),
             creatorId: userObj.uid,
