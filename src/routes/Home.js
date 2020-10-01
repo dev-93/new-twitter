@@ -7,7 +7,7 @@ const Home = ({ userObj }) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        dbService.collection("new-twitter").onSnapshot((snapshot) => {
+        dbService.collection("information").onSnapshot((snapshot) => {
             const newArray = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
@@ -18,7 +18,7 @@ const Home = ({ userObj }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await dbService.collection("new-twitter").add({
+        await dbService.collection("information").add({
             text,
             createDate: new Date().toLocaleString(),
             creatorId: userObj.uid,
