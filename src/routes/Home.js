@@ -5,6 +5,7 @@ import TextList from "components/TextList";
 const Home = ({ userObj }) => {
     const [text, setText] = useState("");
     const [data, setData] = useState([]);
+    const [attachment, setAttachment] = useState();
 
     useEffect(() => {
         dbService.collection("information").onSnapshot((snapshot) => {
@@ -46,7 +47,10 @@ const Home = ({ userObj }) => {
         const thefile = files[0];
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
-            console.log(finishedEvent);
+            const {
+                currentTarget: { result },
+            } = finishedEvent;
+            setAttachment(result);
         };
         reader.readAsDataURL(thefile);
     };
@@ -62,6 +66,16 @@ const Home = ({ userObj }) => {
                 />
                 <input type="file" accept="image/*" onChange={onFileChange} />
                 <input type="submit" value="submit" />
+                <div>
+                    {attachment && (
+                        <img
+                            src={attachment}
+                            alt="이미지"
+                            width="100px"
+                            height="100px"
+                        />
+                    )}
+                </div>
             </form>
             <div>
                 {data.map((list) => (
