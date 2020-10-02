@@ -34,12 +34,6 @@ const Home = ({ userObj }) => {
         setText(value);
     };
 
-    // const onFileChange = (e) => {
-    //     const target: {
-    //         {files},
-    //     } = e;
-    // };
-
     const onFileChange = (e) => {
         const {
             target: { files },
@@ -54,6 +48,11 @@ const Home = ({ userObj }) => {
         };
         reader.readAsDataURL(thefile);
     };
+
+    const onClearAttachment = () => {
+        setAttachment(null);
+    };
+
     return (
         <>
             <form onSubmit={onSubmit}>
@@ -66,16 +65,17 @@ const Home = ({ userObj }) => {
                 />
                 <input type="file" accept="image/*" onChange={onFileChange} />
                 <input type="submit" value="submit" />
-                <div>
-                    {attachment && (
+                {attachment && (
+                    <div>
                         <img
                             src={attachment}
                             alt="이미지"
                             width="100px"
                             height="100px"
                         />
-                    )}
-                </div>
+                        <button onClick={onClearAttachment}>Clear</button>
+                    </div>
+                )}
             </form>
             <div>
                 {data.map((list) => (
