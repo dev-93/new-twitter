@@ -32,6 +32,20 @@ const Home = ({ userObj }) => {
         } = e;
         setText(value);
     };
+
+    // const onFileChange = (e) => {
+    //     const target: {
+    //         {files},
+    //     } = e;
+    // };
+
+    const onFileChange = (e) => {
+        const {
+            target: { files },
+        } = e;
+        const thefile = files[0];
+        console.log(thefile);
+    };
     return (
         <>
             <form onSubmit={onSubmit}>
@@ -42,6 +56,7 @@ const Home = ({ userObj }) => {
                     onChange={onChange}
                     value={text}
                 />
+                <input type="file" accept="image/*" onChange={onFileChange} />
                 <input type="submit" value="submit" />
             </form>
             <div>
