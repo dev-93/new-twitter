@@ -1,4 +1,4 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
 
 const TextList = ({ listObj, isOwner }) => {
@@ -8,6 +8,7 @@ const TextList = ({ listObj, isOwner }) => {
         const yes = window.confirm("지우시겠습니까?");
         if (yes) {
             await dbService.doc(`information/${listObj.id}`).delete();
+            await storageService.refFromURL(listObj.attachmentUrl).delete();
         }
     };
     const onToggle = () => {
