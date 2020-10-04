@@ -19,17 +19,20 @@ const Home = ({ userObj }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const fileRef = storageService
+        const attachmentRef = storageService
             .ref()
             .child(`${userObj.uid}/${uuidv4()}`);
-        const response = await fileRef.putString(attachment, "data_url");
-        console.log(response);
-        // await dbService.collection("information").add({
-        //     text,
-        //     createDate: new Date().toLocaleString(),
-        //     creatorId: userObj.uid,
-        // });
-        // setText("");
+        const response = await attachmentRef.putString(attachment, "data_url");
+        const attachmentUrl = await response.ref.getDownloadURL();
+        const information = {
+            text,
+            createDate: new Date().toLocaleString(),
+            creatorId: userObj.uid,
+            attachmentUrl,
+        };
+        await dbService.collection("information").add(information);
+        setText("");
+        setAttachment("");
     };
 
     const onChange = (e) => {

@@ -44,6 +44,14 @@ const TextList = ({ listObj, isOwner }) => {
             ) : (
                 <>
                     <h4>{listObj.text}</h4>
+                    {listObj.attachmentUrl && (
+                        <img
+                            src={listObj.attachmentUrl}
+                            width="50px"
+                            height="50px"
+                            alt="사진"
+                        />
+                    )}
                     {isOwner && (
                         <>
                             <button onClick={onDelete}>Delete</button>
