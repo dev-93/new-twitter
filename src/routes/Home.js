@@ -19,11 +19,17 @@ const Home = ({ userObj }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const attachmentRef = storageService
-            .ref()
-            .child(`${userObj.uid}/${uuidv4()}`);
-        const response = await attachmentRef.putString(attachment, "data_url");
-        const attachmentUrl = await response.ref.getDownloadURL();
+        let attachmentUrl = "";
+        if (attachment !== "") {
+            const attachmentRef = storageService
+                .ref()
+                .child(`${userObj.uid}/${uuidv4()}`);
+            const response = await attachmentRef.putString(
+                attachment,
+                "data_url"
+            );
+            attachmentUrl = await response.ref.getDownloadURL();
+        }
         const information = {
             text,
             createDate: new Date().toLocaleString(),
