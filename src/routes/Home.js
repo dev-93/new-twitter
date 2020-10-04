@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import TextList from "components/TextList";
-
+import { v4 as uuidv4 } from "uuid";
 const Home = ({ userObj }) => {
     const [text, setText] = useState("");
     const [data, setData] = useState([]);
@@ -19,12 +19,17 @@ const Home = ({ userObj }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await dbService.collection("information").add({
-            text,
-            createDate: new Date().toLocaleString(),
-            creatorId: userObj.uid,
-        });
-        setText("");
+        const fileRef = storageService
+            .ref()
+            .child(`${userObj.uid}/${uuidv4()}`);
+        const response = await fileRef.putString(attachment, "data_url");
+        console.log(response);
+        // await dbService.collection("information").add({
+        //     text,
+        //     createDate: new Date().toLocaleString(),
+        //     creatorId: userObj.uid,
+        // });
+        // setText("");
     };
 
     const onChange = (e) => {
