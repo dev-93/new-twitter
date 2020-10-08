@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = ({ userObj }) => {
     const [text, setText] = useState("");
     const [data, setData] = useState([]);
-    const [attachment, setAttachment] = useState();
+    const [attachment, setAttachment] = useState("");
 
     useEffect(() => {
         dbService.collection("information").onSnapshot((snapshot) => {
