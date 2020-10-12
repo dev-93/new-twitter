@@ -1,5 +1,5 @@
 import { authService, dbService } from "fbase";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 export default ({ userObj }) => {
@@ -9,19 +9,6 @@ export default ({ userObj }) => {
         authService.signOut();
         history.push("/");
     };
-
-    const getMyInfo = async () => {
-        const info = await dbService
-            .collection("information")
-            .where("creatorId", "==", userObj.uid)
-            .orderBy("createDate")
-            .get();
-        console.log(info.docs.map((doc) => doc.data()));
-    };
-
-    useEffect(() => {
-        getMyInfo();
-    }, []);
 
     const onChange = (e) => {
         const {
@@ -43,7 +30,7 @@ export default ({ userObj }) => {
         <>
             <form onSubmit={onSubmit}>
                 <input type="text" placeholder="name" onChange={onChange} value={newDisplayName}/>
-                <input type="submit"value="updateProfile"/>
+                <input type="submit"value="update Profile"/>
             </form>
             <button onClick={onLogOut}>Log Out</button>
         </>
