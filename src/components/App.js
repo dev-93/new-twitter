@@ -15,7 +15,6 @@ function App() {
                     displayName: user.displayName,
                     uid: user.uid,
                     updateProfile: (args) => user.updateProfile(args),
-
                 });
             } else {
                 setIsLoggedIn(false);
@@ -25,7 +24,12 @@ function App() {
     }, []);
 
     const refreshUser = () => {
-        setUserObj(authService.currentUser);
+        const user = authService.currentUser;
+        setUserObj({
+            displayName: user.displayName,
+            uid: user.uid,
+            updateProfile: (args) => user.updateProfile(args),
+        })
     }
     return (
         <>
