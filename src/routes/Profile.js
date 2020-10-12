@@ -1,4 +1,4 @@
-import { authService, dbService } from "fbase";
+import { authService } from "fbase";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -21,8 +21,8 @@ export default ({ userObj }) => {
         e.preventDefault();
         if(userObj.displayName !== newDisplayName) {
             await userObj.updateProfile({
-                diplayName: newDisplayName,
-            });
+                displayName: newDisplayName,
+            })
         }
     }
 
