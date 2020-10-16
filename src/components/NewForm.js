@@ -142,6 +142,7 @@ const Form = styled.form`
             width: 40px;
             padding: 10px 0px;
             text-align: center;
+            box-sizing: border-box;
             border-radius: 20px;
             color: white;
         }
