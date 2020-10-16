@@ -1,5 +1,8 @@
 import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 
 const TextList = ({ listObj, isOwner }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -28,41 +31,109 @@ const TextList = ({ listObj, isOwner }) => {
         setNewText(value);
     };
     return (
-        <div>
+        <List>
             {isEditing ? (
                 <>
-                    <form onSubmit={onSubmit}>
+                    <form onSubmit={onSubmit} className="container">
                         <input
                             type="text"
                             placeholder={listObj.text}
                             onChange={onChange}
                             value={newText}
+                            className="formInput"
                         />
-                        <input type="submit" value="수정하기" />
+                        <input type="submit" value="수정하기" className="formBtn" />
                     </form>
-                    <button onClick={onToggle}>cancel</button>
+                    <button className="cancelBtn" onClick={onToggle}>
+                        cancel
+                    </button>
                 </>
             ) : (
                 <>
                     <h4>{listObj.text}</h4>
-                    {listObj.attachmentUrl && (
-                        <img
-                            src={listObj.attachmentUrl}
-                            width="50px"
-                            height="50px"
-                            alt="사진"
-                        />
-                    )}
+                    {listObj.attachmentUrl && <img src={listObj.attachmentUrl} alt="사진" />}
                     {isOwner && (
-                        <>
-                            <button onClick={onDelete}>Delete</button>
-                            <button onClick={onToggle}>Edit</button>
-                        </>
+                        <div className="actions">
+                            <button onClick={onDelete}>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                            <button onClick={onToggle}>
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
                     )}
                 </>
             )}
-        </div>
+        </List>
     );
 };
+
+const List = styled.div`
+    margin-bottom: 20px;
+    background-color: white;
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: rgba(0, 0, 0, 0.8);
+
+    .container {
+        width: 100%;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+
+        .formBtn {
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            padding: 7px 20px;
+            text-align: center;
+            color: white;
+            border-radius: 20px;
+            background-color: #04aaff;
+            cursor: pointer;
+        }
+    }
+
+    .cancelBtn {
+        cursor: pointer;
+        background-color: tomato;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        width: 100%;
+        padding: 7px 20px;
+        text-align: center;
+        color: white;
+        border-radius: 20px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    img {
+        right: -10px;
+        top: 20px;
+        position: absolute;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-top: 10px;
+    }
+
+    .actions {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        button:first-child {
+            margin-right: 10px;
+        }
+    }
+`;
 
 export default TextList;

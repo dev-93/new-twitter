@@ -1,12 +1,19 @@
 import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 
 const NewForm = ({ userObj }) => {
     const [attachment, setAttachment] = useState("");
     const [text, setText] = useState("");
 
     const onSubmit = async (e) => {
+        if (text === "") {
+            return;
+        }
+
         e.preventDefault();
         let attachmentUrl = "";
         if (attachment !== "") {
@@ -51,24 +58,124 @@ const NewForm = ({ userObj }) => {
         setAttachment(null);
     };
     return (
-        <form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit}>
+            <div className="container">
+                <input
+                    type="text"
+                    placeholder="what's on your mind?"
+                    maxLength={120}
+                    onChange={onChange}
+                    value={text}
+                />
+                <input type="submit" value="&rarr;" className="arrow" />
+            </div>
+
+            <label for="attach-file">
+                <span>Add photos</span>
+                <FontAwesomeIcon icon={faPlus} />
+            </label>
             <input
-                type="text"
-                placeholder="what's on your mind?"
-                maxLength={120}
-                onChange={onChange}
-                value={text}
+                id="attach-file"
+                type="file"
+                accept="image/*"
+                onChange={onFileChange}
+                style={{
+                    opacity: 0,
+                }}
             />
-            <input type="file" accept="image/*" onChange={onFileChange} />
-            <input type="submit" value="submit" />
+
             {attachment && (
-                <div>
-                    <img src={attachment} alt="이미지" width="100px" height="100px" />
-                    <button onClick={onClearAttachment}>Clear</button>
+                <div className="attachment">
+                    <img
+                        src={attachment}
+                        alt="이미지"
+                        width="100px"
+                        height="100px"
+                        style={{
+                            backgroundImage: attachment,
+                        }}
+                    />
+                    <button className="clear" onClick={onClearAttachment}>
+                        <span>Remove</span>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </button>
                 </div>
             )}
-        </form>
+        </Form>
     );
 };
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        position: relative;
+        margin-bottom: 20px;
+        width: 100%;
+
+        input {
+            flex-grow: 1;
+            height: 40px;
+            padding: 0px 20px;
+            color: white;
+            border: 1px solid #04aaff;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .arrow {
+            position: absolute;
+            right: 0;
+            background-color: #04aaff;
+            height: 40px;
+            width: 40px;
+            padding: 10px 0px;
+            text-align: center;
+            border-radius: 20px;
+            color: white;
+        }
+    }
+
+    label {
+        color: #04aaff;
+        cursor: pointer;
+
+        > span {
+            margin-right: 10px;
+            font-size: 12px;
+        }
+    }
+
+    .attachment {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        img {
+            height: 80px;
+            width: 80px;
+            border-radius: 40px;
+        }
+
+        .clear {
+            color: #04aaff;
+            cursor: pointer;
+            text-align: center;
+
+            span {
+                margin-right: 10px;
+                font-size: 12px;
+            }
+        }
+    }
+`;
 
 export default NewForm;

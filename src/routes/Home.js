@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { dbService } from "fbase";
 import TextList from "components/TextList";
 import NewForm from "components/NewForm";
+import styled from "styled-components";
 
 const Home = ({ userObj }) => {
     const [data, setData] = useState([]);
@@ -17,9 +18,9 @@ const Home = ({ userObj }) => {
     }, []);
 
     return (
-        <>
+        <Wrap>
             <NewForm userObj={userObj} />
-            <div>
+            <div className="list_box">
                 {data.map((list) => (
                     <TextList
                         key={list.id}
@@ -28,8 +29,19 @@ const Home = ({ userObj }) => {
                     />
                 ))}
             </div>
-        </>
+        </Wrap>
     );
 };
+
+const Wrap = styled.div`
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+
+    .list_box {
+        margin-top: 30px;
+    }
+`;
 
 export default Home;
