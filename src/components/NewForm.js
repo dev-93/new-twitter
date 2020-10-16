@@ -66,6 +66,7 @@ const NewForm = ({ userObj }) => {
                     maxLength={120}
                     onChange={onChange}
                     value={text}
+                    className="text"
                 />
                 <input type="submit" value="&rarr;" className="arrow" />
             </div>
@@ -113,7 +114,7 @@ const Form = styled.form`
 
     .container {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         flex-wrap: wrap;
         position: relative;
@@ -121,7 +122,6 @@ const Form = styled.form`
         width: 100%;
 
         input {
-            flex-grow: 1;
             height: 40px;
             padding: 0px 20px;
             color: white;
@@ -129,11 +129,14 @@ const Form = styled.form`
             border-radius: 20px;
             font-weight: 500;
             font-size: 12px;
+
+            &.text {
+                width: 200px;
+                margin-right: 20px;
+            }
         }
 
         .arrow {
-            position: absolute;
-            right: 0;
             background-color: #04aaff;
             height: 40px;
             width: 40px;
